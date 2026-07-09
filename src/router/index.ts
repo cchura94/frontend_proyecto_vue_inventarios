@@ -7,6 +7,7 @@ import WebLayout from "../layout/WebLayout.vue";
 import AppLayout from "../layout/AppLayout.vue";
 import Perfil from "../views/admin/Perfil.vue";
 import Dashboard from "../views/admin/Dashboard.vue";
+import Usuario from "../views/admin/Usuario.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -26,6 +27,8 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             { path: '', component: Dashboard },
             { path: 'perfil', component: Perfil},
+            { path: 'usuario', component: Usuario},
+            
         ]
     }
 ];

@@ -19,7 +19,7 @@ instance.interceptors.request.use((config) => {
     const token = localStorage.getItem("access_token") || null;
 
     if(token){
-        config.headers["Content-Type"] = "application/jsonnnnnnnnn"
+        config.headers["Content-Type"] = "application/json"
         config.headers.Authorization =  "Bearer "+ token
     }
     return config;
@@ -34,7 +34,7 @@ instance.interceptors.response.use(
     error => {
         if(error.response?.status === 401){
             localStorage.removeItem("access_token");
-            location.href = "/auth/login"
+            location.href = "/auth/ingresar"
         }
         return Promise.reject(error);
     }
