@@ -1,6 +1,9 @@
 <template>
     <h1>Mi Perfil</h1>
-    {{ perfil }}
+    <h4>Nombre: {{ perfil.name }}</h4>
+    <h4>EMAIL: {{ perfil.email }}</h4>
+    <h4>Ecreado en: {{ perfil.created_at }}</h4>
+    <h1>Datos </h1>
 </template>
 
 <script setup>
