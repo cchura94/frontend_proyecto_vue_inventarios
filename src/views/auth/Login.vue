@@ -24,6 +24,7 @@ import { useRouter } from "vue-router";
         try {
             const resp = await loginConLaravel(credenciales.value.email, credenciales.value.password);
             console.log(resp.data);
+            console.log(resp.data);
             localStorage.setItem("access_token", resp.data.access_token)
             router.push("/admin");
         } catch (error) {

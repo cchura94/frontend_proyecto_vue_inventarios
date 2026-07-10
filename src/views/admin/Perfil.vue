@@ -6,11 +6,11 @@
     <h1>Datos </h1>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { funPerfil } from "./../../services/perfil.service"
 
-const perfil = ref({});
+const perfil = ref<any>({});
 
 async function funObtenerPerfil(){
     const data = await funPerfil();

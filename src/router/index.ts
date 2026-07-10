@@ -18,15 +18,16 @@ const routes: Array<RouteRecordRaw> = [
             { path: '/', component: Inicio},
             { path: '/acercade', component: Nosotros },
             { path: '/servicios', component: Servicios },
-            { path: '/auth/ingresar', component: Login }
+            { path: '/auth/ingresar', component: Login, name: 'Login', meta: {redirectIfAuth: true} }
         ]
     },
     {
         path: '/admin',
         component: AppLayout,
+        meta: {requireAuth: true},
         children: [
             { path: '', component: Dashboard },
-            { path: 'perfil', component: Perfil},
+            { path: 'perfil', component: Perfil, /*name="Perfil*/},
             { path: 'usuario', component: Usuario},
             
         ]
@@ -38,5 +39,26 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+router.beforeEach((to, from, next) => {
+    console.log("ESTOY EN (FROM): "+ from.path);
+    console.log("QUIERO INGRESAR A (TO): "+to.path);
+    const token = localStorage.getItem("access_token");
+
+    if(to.meta.requireAuth){
+        if(!token){
+            return next({name: 'Login'})
+        }else{
+            return  next();
+        }
+    }
+    
+    if(to.meta.redirectIfAuth && token){
+        return next({name: 'Perfil'});
+    }
+
+    return next();
+})
+
 
 export default router;
