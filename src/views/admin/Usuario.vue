@@ -1,5 +1,18 @@
 <template>
     <h1>Lista de Usuarios</h1>
+    {{usuario}}
+    <form>
+        <label for="">Ingrese Nombre</label>
+        <input type="text" v-model="usuario.name">
+        <br>
+        <label for="">Ingrese Correo</label>
+        <input type="email" v-model="usuario.email">
+        <br>
+        <label for="">Ingrese Contraseña</label>
+        <input type="password" v-model="usuario.password">
+        <br>
+        <button type="button" @click="funGuardarUsuario()">Guardar Cambios</button>
+    </form>
     <table border="1">
         <thead>
             <tr>
@@ -26,6 +39,7 @@
     import usuarioService from '../../services/usuario.service';
 
     const usuarios = ref<any>([]);
+    const usuario = ref<any>({name: "", email: "", password: ""});
 
     onMounted(() => {
         funListarUsuarios();
@@ -33,6 +47,11 @@
 
     async function funListarUsuarios(){
         const { data } = await usuarioService.funListar()
-        usuarios.value = data;
+        usuarios.value = data.data;
+    }
+
+    async function funGuardarUsuario(){
+        await usuarioService.funGuardar(usuario.value);
+        funListarUsuarios();
     }
 </script>

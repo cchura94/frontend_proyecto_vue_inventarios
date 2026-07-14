@@ -8,6 +8,7 @@ import AppLayout from "../layout/AppLayout.vue";
 import Perfil from "../views/admin/Perfil.vue";
 import Dashboard from "../views/admin/Dashboard.vue";
 import Usuario from "../views/admin/Usuario.vue";
+import Pagina404 from "../views/errors/Pagina404.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -27,11 +28,16 @@ const routes: Array<RouteRecordRaw> = [
         meta: {requireAuth: true},
         children: [
             { path: '', component: Dashboard },
-            { path: 'perfil', component: Perfil, /*name="Perfil*/},
+            { path: 'perfil', name: "Perfil", component: Perfil, },
             { path: 'usuario', component: Usuario},
             
         ]
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: Pagina404
     }
+
 ];
 
 
@@ -40,24 +46,24 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
     console.log("ESTOY EN (FROM): "+ from.path);
-    console.log("QUIERO INGRESAR A (TO): "+to.path);
+    // console.log("QUIERO INGRESAR A (TO): "+to.path);
     const token = localStorage.getItem("access_token");
 
     if(to.meta.requireAuth){
         if(!token){
-            return next({name: 'Login'})
+            return {name: 'Login'}
         }else{
-            return  next();
+            return true;
         }
     }
     
     if(to.meta.redirectIfAuth && token){
-        return next({name: 'Perfil'});
+        return {name: 'Perfil'};
     }
 
-    return next();
+    return true;
 })
 
 

@@ -5,3 +5,8 @@ export async function loginConLaravel(email: string, password: string){
     const respuesta = await  api.post("/v1/auth/login", {email, password});
     return respuesta;
 }
+
+export async function logoutConLaravel(){
+    const respuesta =await api.post("/v1/auth/logout");
+    return respuesta;
+}

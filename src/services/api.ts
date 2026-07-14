@@ -1,6 +1,9 @@
 import axios from "axios"
 
-export const BASE_URL = "https://laravue2.blumbit.net/back/public";
+// export const BASE_URL = "https://laravue2.blumbit.net/back/public";
+// export const BASE_URL = "http://localhost:8000"
+export const BASE_URL = "https://backinventarios.blumbit.net";
+
 const BASE_URL_API = `${BASE_URL}/api`;
 
 // const token = localStorage.getItem("access_token") || null;
@@ -17,7 +20,7 @@ const instance = axios.create({
 
 // interceptors del cliente (salida hacia el backend)
 instance.interceptors.request.use((config) => {
-    console.log("INTERCEPTOR ***************** request")
+    // console.log("INTERCEPTOR ***************** request")
     const token = localStorage.getItem("access_token") || null;
 
     
@@ -32,7 +35,7 @@ instance.interceptors.request.use((config) => {
 // interceptores del servidor (ingreso desde el Backend)
 instance.interceptors.response.use(
     (resp) => {
-        console.log("INTERCEPTOR ***************** response")
+        // console.log("INTERCEPTOR ***************** response")
         return resp
     },
     (error) => {

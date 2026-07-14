@@ -6,16 +6,16 @@ export default {
         return api.get("/usuario");
     },
     funGuardar(datos: any){
-        return api.post("/user", datos);
+        return api.post("/usuario", datos);
     },
     funMostrar(id: number){
-        return api.get("/user/"+id);
+        return api.get("/usuario/"+id);
     },
     funModificar(id: number, datos: any){
-        return api.put("/user/"+id, datos);
+        return api.put("/usuario/"+id, datos);
     },
     funEliminar(id: number){
-        return api.delete("/user/"+id);
+        return api.delete("/usuario/"+id);
     },
     
 }
