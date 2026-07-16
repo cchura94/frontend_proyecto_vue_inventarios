@@ -105,9 +105,9 @@ const model = ref([
         path: '/blocks',
         items: [
             {
-                label: 'Free Blocks',
-                icon: 'pi pi-fw pi-eye',
-                to: '/blocks/free'
+                label: 'Categorias',
+                icon: 'pi pi-fw pi-box',
+                to: '/admin/categoria'
             },
             {
                 label: 'All Blocks',

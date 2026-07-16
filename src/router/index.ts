@@ -9,6 +9,7 @@ import Perfil from "../views/admin/Perfil.vue";
 import Dashboard from "../views/admin/Dashboard.vue";
 import Usuario from "../views/admin/Usuario.vue";
 import Pagina404 from "../views/errors/Pagina404.vue";
+import Categoria from "../views/admin/inventario/Categoria.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -30,6 +31,10 @@ const routes: Array<RouteRecordRaw> = [
             { path: '', component: Dashboard },
             { path: 'perfil', name: "Perfil", component: Perfil, },
             { path: 'usuario', component: Usuario},
+            {
+                path: 'categoria',
+                component: Categoria
+            }
             
         ]
     },
