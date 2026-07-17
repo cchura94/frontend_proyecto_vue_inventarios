@@ -10,6 +10,7 @@ import Dashboard from "../views/admin/Dashboard.vue";
 import Usuario from "../views/admin/Usuario.vue";
 import Pagina404 from "../views/errors/Pagina404.vue";
 import Categoria from "../views/admin/inventario/Categoria.vue";
+import Producto from "../views/admin/inventario/Producto.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -34,6 +35,10 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'categoria',
                 component: Categoria
+            },
+            {
+                path: 'producto',
+                component: Producto
             }
             
         ]

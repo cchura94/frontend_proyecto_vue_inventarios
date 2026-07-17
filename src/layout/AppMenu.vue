@@ -110,10 +110,9 @@ const model = ref([
                 to: '/admin/categoria'
             },
             {
-                label: 'All Blocks',
-                icon: 'pi pi-fw pi-globe',
-                url: 'https://blocks.primevue.org/',
-                target: '_blank'
+                label: 'Productos',
+                icon: 'pi pi-fw pi-table',
+                to: '/admin/producto'
             }
         ]
     },
