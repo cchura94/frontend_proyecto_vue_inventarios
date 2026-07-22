@@ -18,6 +18,7 @@ declare module 'vue' {
     FileUpload: typeof import('primevue/fileupload')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconField: typeof import('primevue/iconfield')['default']
+    Image: typeof import('primevue/image')['default']
     InputIcon: typeof import('primevue/inputicon')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']

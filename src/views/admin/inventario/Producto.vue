@@ -4,6 +4,9 @@
             <Toolbar class="mb-6">
                 <template #start>
                     <Button label="Nuevo Producto" icon="pi pi-plus" class="mr-2" @click="openNew" />
+                    <Select v-model="sucursal_id" :options="sucursales" optionLabel="nombre" optionValue="id" placeholder="Seleccione una Sucursal" class="w-full md:w-56" @change="funGetAlmacenes()" />
+                    <Select v-model="selectedAlmacen" :options="almacenes" optionLabel="nombre" optionValue="id" placeholder="Seleccione un Almacen" class="w-full md:w-56" @change="funListarProductos()" />
+
                 </template>
 
                 <template #end>
@@ -33,7 +36,7 @@
                             <InputIcon>
                                 <i class="pi pi-search" />
                             </InputIcon>
-                            <InputText placeholder="Buscar..." v-model="buscar" @keyup="funListarProductos()" />
+                            <InputText placeholder="Buscar..." v-model="buscar" @keyup.enter="funListarProductos()" />
                         </IconField>
                     </div>
                 </template>
@@ -42,7 +45,7 @@
                 <Column field="nombre" header="Name" sortable style="min-width: 16rem"></Column>
                 <Column header="Image">
                     <template #body="slotProps">
-                        <img :src="`http://backinventarios.blumbit.net/${slotProps.data.image}`" :alt="slotProps.data.image" class="rounded" style="width: 64px" />
+                        <Image v-if="slotProps.data.imagen" :src="`https://backinventarios.blumbit.net/${slotProps.data.imagen}`" :alt="slotProps.data.image" class="rounded" style="width: 64px" preview  />
                     </template>
                 </Column>
                 <Column field="precio_venta_actual" header="Precio" sortable style="min-width: 8rem">
@@ -50,7 +53,7 @@
                         {{ formatCurrency(slotProps.data.precio_venta_actual) }}
                     </template>
                 </Column>
-                <Column field="category" header="Category" sortable style="min-width: 10rem"></Column>
+                <Column field="categoria.nombre" header="Categoria" sortable style="min-width: 10rem"></Column>
                 
                 <Column field="estado" header="Estado" sortable style="min-width: 12rem">
                     <template #body="slotProps">
@@ -59,6 +62,7 @@
                 </Column>
                 <Column :exportable="false" style="min-width: 12rem">
                     <template #body="slotProps">
+                        <Button icon="pi pi-image" class="mr-2" @click="funDialogImagen(slotProps.data)"></Button>
                         <Button icon="pi pi-pencil" variant="outlined" rounded class="mr-2" @click="editProduct(slotProps.data)" />
                         <Button icon="pi pi-trash" variant="outlined" rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
                     </template>
@@ -66,6 +70,21 @@
             </DataTable>
         </div>
 
+        <Dialog v-model:visible="productDialogImagen" :style="{ width: '450px' }" header="Actualizar Imagen" :modal="true">
+       
+            <div class="flex flex-col gap-6">
+                <FileUpload name="demo[]" :multiple="false" accept="image/*" :maxFileSize="1000000" customUpload @select="onFileSelect">
+                    <template #empty>
+                        <div>Drag and drop files to here to upload.</div>
+                    </template>
+                </FileUpload>
+            </div>
+
+            <template #footer>
+                <Button label="Cancelar" icon="pi pi-times" text @click="hideDialog" />
+                <Button label="Guardar" icon="pi pi-check" @click="saveProduct" />
+            </template>
+        </Dialog>
          <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Detalle Productos" :modal="true">
             {{product}}
             <div class="flex flex-col gap-6">
@@ -142,6 +161,8 @@
     import { onMounted, ref } from 'vue';
     import productoService from '../../../services/producto.service';
     import categoriaService from '../../../services/categoria.service';
+    import sucursalService from '../../../services/sucursal.service';
+    import almacenService from '../../../services/almacen.service';
 
     interface ProductoInterface {
       id?: number,
@@ -170,11 +191,19 @@
     const selectedAlmacen = ref(0);
 
     const categorias = ref<any>([])
-    
+
+    const sucursal_id = ref(-1);
+    const sucursales = ref<any>([]);
+    const almacenes = ref<any>([]);
+
+    const productDialogImagen = ref(false) 
+    const imagenSeleccionada = ref();
+    const id_producto_imagen = ref(-1)
 
     onMounted(() => {
         funListarProductos();
-        funGetCategorias()
+        funGetCategorias();
+        funGetSucursales();
     });
 
     const formatCurrency = (value: number) => {
@@ -187,6 +216,18 @@
         const {data} = await categoriaService.funListar();
         categorias.value = data;
     }
+
+    const funGetSucursales = async () => {
+        const {data} = await sucursalService.funListar();
+        sucursales.value = data;
+    }
+
+    const funGetAlmacenes = async () => {
+        const {data} = await almacenService.funListar(sucursal_id.value);
+        almacenes.value = data;
+    }
+
+
 
     const exportCSV = (event: any) => {
         dt.value.exportCSV();
@@ -222,6 +263,27 @@ const hideDialog = () => {
     productDialog.value = false;
     submitted.value = false;
 };
+
+const funDialogImagen = (prod: any) => {
+    id_producto_imagen.value = prod.id;
+    productDialogImagen.value = true;
+}
+
+const onFileSelect = async (event: any) => {
+    imagenSeleccionada.value = event.files[0];
+
+    const formData = new FormData();
+    formData.append("imagen", imagenSeleccionada.value);
+
+    const {data} = await productoService.funActualizarImagen(id_producto_imagen.value, formData);
+    productDialogImagen.value = false;
+
+    funListarProductos();
+    id_producto_imagen.value = -1
+}
+
+
+
 const saveProduct = async () => {
     submitted.value = true;
 

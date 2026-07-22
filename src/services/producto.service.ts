@@ -24,5 +24,8 @@ export default {
     funEliminar(id: number){
         return api.delete(`/producto/${id}`);
     },
+    funActualizarImagen(id: number, formData: any){
+        return api.post(`/producto/${id}/actualiza-imagen`, formData)
+    }
     
 }
