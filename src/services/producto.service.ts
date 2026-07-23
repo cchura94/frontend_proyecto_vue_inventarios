@@ -26,6 +26,11 @@ export default {
     },
     funActualizarImagen(id: number, formData: any){
         return api.post(`/producto/${id}/actualiza-imagen`, formData)
+    },
+    funDescargarPDF(){
+        return api.get(`/producto/exportar/pdf`, {responseType: "blob"});
+    },
+    funDescargarExcel(){
+        return api.get(`/producto/exportar/excel`, {responseType: "blob"});
     }
-    
 }

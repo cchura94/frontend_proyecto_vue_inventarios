@@ -11,6 +11,10 @@ import Usuario from "../views/admin/Usuario.vue";
 import Pagina404 from "../views/errors/Pagina404.vue";
 import Categoria from "../views/admin/inventario/Categoria.vue";
 import Producto from "../views/admin/inventario/Producto.vue";
+import Sucursal from "../views/admin/inventario/Sucursal.vue";
+import Almacen from "../views/admin/inventario/Almacen.vue";
+import NotaCompra from "../views/admin/nota/NotaCompra.vue";
+import NotaVenta from "../views/admin/nota/NotaVenta.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -39,6 +43,23 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'producto',
                 component: Producto
+            },
+            {
+                path: 'sucursal',
+                component: Sucursal
+            },
+            {
+                path: 'almacen',
+                component: Almacen
+            },
+            {
+                path: 'nota/compra',
+                component: NotaCompra
+            }
+            ,
+            {
+                path: 'nota/venta',
+                component: NotaVenta
             }
             
         ]

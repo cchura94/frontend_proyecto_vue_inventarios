@@ -113,56 +113,40 @@ const model = ref([
                 label: 'Productos',
                 icon: 'pi pi-fw pi-table',
                 to: '/admin/producto'
+            },
+            {
+                label: 'Sucursales',
+                icon: 'pi pi-fw pi-circle',
+                to: '/admin/sucursal'
+            },
+            {
+                label: 'Almacenes',
+                icon: 'pi pi-fw pi-circle',
+                to: '/admin/almacen'
             }
         ]
     },
     {
-        label: 'Compra y Venta',
+        label: 'Compras y Ventas',
         icon: 'pi pi-fw pi-shop',
         path: '/pages',
         items: [
             {
-                label: 'Landing',
+                label: 'Gestión Compras',
                 icon: 'pi pi-fw pi-globe',
-                to: '/landing'
+                to: '/admin/nota/compra'
             },
             {
-                label: 'Auth',
-                icon: 'pi pi-fw pi-user',
-                path: '/auth',
-                items: [
-                    {
-                        label: 'Login',
-                        icon: 'pi pi-fw pi-sign-in',
-                        to: '/auth/login'
-                    },
-                    {
-                        label: 'Error',
-                        icon: 'pi pi-fw pi-times-circle',
-                        to: '/auth/error'
-                    },
-                    {
-                        label: 'Access Denied',
-                        icon: 'pi pi-fw pi-lock',
-                        to: '/auth/access'
-                    }
-                ]
+                label: 'Gestión Ventas',
+                icon: 'pi pi-fw pi-globe',
+                to: '/admin/nota/venta'
             },
             {
-                label: 'Crud',
-                icon: 'pi pi-fw pi-pencil',
-                to: '/pages/crud'
+                label: 'Lista Compras y Ventas',
+                icon: 'pi pi-fw pi-globe',
+                to: '/admin/nota'
             },
-            {
-                label: 'Not Found',
-                icon: 'pi pi-fw pi-exclamation-circle',
-                to: '/pages/notfound'
-            },
-            {
-                label: 'Empty',
-                icon: 'pi pi-fw pi-circle-off',
-                to: '/pages/empty'
-            }
+            
         ]
     },
    

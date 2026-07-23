@@ -10,7 +10,8 @@
                 </template>
 
                 <template #end>
-                    <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Importar" customUpload chooseLabel="Importar" class="mr-2" auto :chooseButtonProps="{ severity: 'secondary' }" />
+                    <Button label="EXCEL" icon="pi pi-excel" class="mr-2" @click="funDescargarEXCEL()"/>
+                    <Button label="PDF" icon="pi pi-pdf" class="mr-2" @click="funDescargarPDF()"/>
                     <Button label="Exportar" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
                 </template>
             </Toolbar>
@@ -41,9 +42,9 @@
                     </div>
                 </template>
 
-                <Column field="id" header="Code" sortable style="min-width: 12rem"></Column>
-                <Column field="nombre" header="Name" sortable style="min-width: 16rem"></Column>
-                <Column header="Image">
+                <Column field="id" header="ID" sortable style="min-width: 2rem"></Column>
+                <Column field="nombre" header="NOMBRE" sortable style="min-width: 16rem"></Column>
+                <Column header="Imagen">
                     <template #body="slotProps">
                         <Image v-if="slotProps.data.imagen" :src="`https://backinventarios.blumbit.net/${slotProps.data.imagen}`" :alt="slotProps.data.image" class="rounded" style="width: 64px" preview  />
                     </template>
@@ -232,6 +233,41 @@
     const exportCSV = (event: any) => {
         dt.value.exportCSV();
     };
+
+    const funDescargarPDF = async () => {
+        const res = await productoService.funDescargarPDF();
+
+        const url = window.URL.createObjectURL(
+            new Blob([res.data], {type: "application/pdf"})
+        );
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "lista_productos.pdf";
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(url);
+
+    }
+
+    const funDescargarEXCEL = async () => {
+         const res = await productoService.funDescargarExcel();
+
+        const url = window.URL.createObjectURL(
+            new Blob([res.data], {type: "application/excel"})
+        );
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "lista_productos.xlsx";
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(url);
+    }
 
     const onPage = (event: any) => {
         lazyParams.value = event;
