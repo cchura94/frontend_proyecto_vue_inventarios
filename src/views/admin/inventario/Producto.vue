@@ -165,7 +165,7 @@
     import sucursalService from '../../../services/sucursal.service';
     import almacenService from '../../../services/almacen.service';
 
-    interface ProductoInterface {
+    export interface ProductoInterface {
       id?: number,
       nombre: string,
       descripcion?: string,
